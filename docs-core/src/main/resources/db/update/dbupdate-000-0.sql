@@ -14,6 +14,19 @@ create cached table T_ACL ( ACL_ID_C varchar(36) not null, ACL_PERM_C varchar(30
 create cached table T_SHARE ( SHA_ID_C varchar(36) not null, SHA_NAME_C varchar(36), SHA_CREATEDATE_D datetime, SHA_DELETEDATE_D datetime, primary key (SHA_ID_C) );
 create cached table T_AUDIT_LOG ( LOG_ID_C varchar(36) not null, LOG_IDENTITY_C varchar(36) not null, LOG_CLASSENTITY_C varchar(50) not null, LOG_TYPE_C varchar(50) not null, LOG_MESSAGE_C varchar(1000), LOG_CREATEDATE_D datetime, primary key (LOG_ID_C) );
 
+create
+cached table T_REGISTER_REQUEST (
+    RER_ID_C varchar(36) not null,
+    RER_USERNAME_C varchar(50) not null,
+    RER_PASSWORD_C varchar(60) not null,
+    RER_EMAIL_C varchar(100) not null,
+    RER_DESC_C varchar(200) not null,
+    RER_CREATEDATE_D datetime not null,
+    RER_DELETEDATE_D datetime,
+    RER_DISABLEDATE_D datetime,
+    primary key (RER_ID_C)
+);
+
 alter table T_AUTHENTICATION_TOKEN add constraint FK_AUT_IDUSER_C foreign key (AUT_IDUSER_C) references T_USER (USE_ID_C) on delete restrict on update restrict;
 alter table T_DOCUMENT add constraint FK_DOC_IDUSER_C foreign key (DOC_IDUSER_C) references T_USER (USE_ID_C) on delete restrict on update restrict;
 alter table T_FILE add constraint FK_FIL_IDDOC_C foreign key (FIL_IDDOC_C) references T_DOCUMENT (DOC_ID_C) on delete restrict on update restrict;
