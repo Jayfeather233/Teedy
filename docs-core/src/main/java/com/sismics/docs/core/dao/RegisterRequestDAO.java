@@ -20,6 +20,9 @@ public class RegisterRequestDAO {
 
     private void insertUser(RegisterRequest rr) throws Exception {
         UserDao ud = new UserDao();
+        if (ud.findUser(rr.getUserName(), rr.getEmail())) {
+            throw new IllegalArgumentException("Username or email duplicated");
+        }
         User u = new User();
         u.setCreateDate(new Date());
         u.setEmail(rr.getEmail());
@@ -83,6 +86,10 @@ public class RegisterRequestDAO {
     }
 
     public void addRequest(String userName, String password, String email, String desc) {
+        UserDao ud = new UserDao();
+        if (ud.findUser(userName, email)) {
+            throw new IllegalArgumentException("Username or email duplicated");
+        }
         RegisterRequest rr = new RegisterRequest(userName, email, desc, new Date());
         rr.setPassword(password);
 //        rr.setReq_id(UUID.randomUUID().toString());

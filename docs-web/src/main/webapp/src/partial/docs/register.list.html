@@ -1,0 +1,63 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">{{ 'register.list.title' | translate }}</h2>
+
+  <!-- 筛选按钮 -->
+  <div class="mb-4 text-center">
+    <button class="btn btn-outline-info mx-2" ng-click="filterByStatus('all')">{{ 'register.list.all' | translate }}</button>
+    <button class="btn btn-outline-success mx-2" ng-click="filterByStatus('passed')">{{ 'register.list.passed' | translate }}</button>
+    <button class="btn btn-outline-warning mx-2" ng-click="filterByStatus('rejected')">{{ 'register.list.rejected' | translate }}</button>
+    <button class="btn btn-outline-primary mx-2" ng-click="filterByStatus('waiting')">{{ 'register.list.waiting' | translate }}</button>
+  </div>
+
+  <div class="table-container table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+      <thead class="thead-dark">
+      <tr>
+        <th>
+          <span>{{ 'register.list.username' | translate }}</span>
+          <button ng-click="sortData('username')" class="btn btn-light btn-sm">↑↓</button>
+        </th>
+        <th>
+          <span>{{ 'register.list.email' | translate }}</span>
+          <button ng-click="sortData('email')" class="btn btn-light btn-sm">↑↓</button>
+        </th>
+        <th>
+          <span>{{ 'register.list.descript' | translate }}</span>
+          <button ng-click="sortData('descript')" class="btn btn-light btn-sm">↑↓</button>
+        </th>
+        <th>
+          <span>{{ 'register.list.status' | translate }}</span>
+          <button ng-click="sortData('status')" class="btn btn-light btn-sm">↑↓</button>
+        </th>
+        <th>
+          <span>{{ 'register.list.create_date' | translate }}</span>
+          <button ng-click="sortData('create_date')" class="btn btn-light btn-sm">↑↓</button>
+        </th>
+        <th>
+          <span>{{ 'register.list.actions' | translate }}</span>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="item in filtered_list | orderBy:sortColumn:reverseSort">
+        <td>{{ item.username }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.descript }}</td>
+        <td>
+          <span ng-if="item.delete_date !== 'null'" class="badge badge-success">{{ 'register.list.passed' | translate }}</span>
+          <span ng-if="item.disable_date !== 'null'" class="badge badge-danger">{{ 'register.list.rejected' | translate }}</span>
+          <span ng-if="item.delete_date === 'null' && item.disable_date === 'null'" class="badge badge-warning">{{ 'register.list.waiting' | translate }}</span>
+        </td>
+        <td>{{ item.create_date | date:'yyyy-MM-dd HH:mm' }}</td>
+        <td>
+          <!-- 只有当状态是 'waiting' 时才显示操作按钮 -->
+          <button ng-click="approve(item.id)" class="btn btn-success btn-sm" ng-if="item.delete_date === 'null' && item.disable_date === 'null'">{{ 'register.list.approve' | translate }}</button>
+          <button ng-click="deny(item.id)" class="btn btn-danger btn-sm" ng-if="item.delete_date === 'null' && item.disable_date === 'null'">{{ 'register.list.deny' | translate }}</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div ng-if="!filtered_list || filtered_list.length === 0" class="text-center text-muted">{{ 'register.list.no_requests' | translate }}</div>
+</div>

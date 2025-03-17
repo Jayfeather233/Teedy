@@ -12,16 +12,16 @@ public class RegisterRequest implements Loggable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "RER_ID_C", nullable = false)
+    @Column(name = "RER_ID_C", nullable = false, unique = true)
     private String req_id;
 
-    @Column(name = "RER_USERNAME_C", nullable = false, unique = true)
+    @Column(name = "RER_USERNAME_C", nullable = false)
     private String userName;
 
     @Column(name = "RER_PASSWORD_C", nullable = false)
     private String password;
 
-    @Column(name = "RER_EMAIL_C", nullable = false, unique = true)
+    @Column(name = "RER_EMAIL_C", nullable = false)
     private String email;
 
     @Column(name = "RER_DESC_C")

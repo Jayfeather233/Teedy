@@ -223,8 +223,39 @@
       "related_links": "相关链接",
       "document_created": "文档由 {{ username }} 创建",
       "edit_user": "编辑 {{ username }} 用户"
+    }
+  },
+  "register": {
+    "req_register": "请求注册",
+    "register_title": "注册新用户",
+    "new_username": "用户名",
+    "new_username_prompt": "输入用户名",
+    "new_password": "密码",
+    "new_password_prompt": "输入密码",
+    "new_email": "邮箱",
+    "new_email_prompt": "输入邮箱（可空）",
+    "new_desc": "申请描述",
+    "new_desc_prompt": "输入申请描述（可空）",
+    "admin": {
+      "menu_title": "新用户管理",
+      "regreq": "新用户请求",
+      "all_regreq": "新用户请求"
     },
-    "register_title": "注册新用户"
+    "list": {
+      "title": "新用户列表",
+      "username": "用户名",
+      "email": "邮箱",
+      "descript": "描述",
+      "status": "状态",
+      "create_date": "创建日期",
+      "actions": "操作",
+      "passed": "通过",
+      "rejected": "拒绝",
+      "approve": "通过",
+      "deny": "拒绝",
+      "waiting": "等待",
+      "all": "所有"
+    }
   },
   "usergroup": {
     "search_groups": "搜索群组",
