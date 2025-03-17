@@ -61,12 +61,22 @@ public class UserDao {
 
     public boolean findUser(String username, String email) {
         EntityManager em = ThreadLocalContext.get().getEntityManager();
-        Query q = em.createQuery("select u from User u where u.username = :username or u.email = :email");
+
+        String queryString = "SELECT u FROM User u WHERE u.username = :username";
+        if (email != null && !email.trim().isEmpty()) {
+            queryString += " OR u.email = :email";
+        }
+
+        Query q = em.createQuery(queryString);
         q.setParameter("username", username);
-        q.setParameter("email", email);
+
+        if (email != null && !email.trim().isEmpty()) {
+            q.setParameter("email", email);
+        }
 
         return !q.getResultList().isEmpty();
     }
+
     
     /**
      * Creates a new user.

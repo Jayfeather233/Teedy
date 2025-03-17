@@ -254,7 +254,12 @@
       "approve": "通过",
       "deny": "拒绝",
       "waiting": "等待",
-      "all": "所有"
+      "all": "所有",
+      "notification": ""
+    },
+    "status": {
+      "success": "成功",
+      "failed": "失败"
     }
   },
   "usergroup": {
@@ -264,6 +269,11 @@
     "default": {
       "title": "用户 & 群组",
       "message": "此处您可以浏览用户和群组信息."
+    },
+    "register": {
+      "fillAllBlank": "请填写所有必填项",
+      "failed": "请求发送失败",
+      "success": "请求发送成功"
     }
   },
   "settings": {
