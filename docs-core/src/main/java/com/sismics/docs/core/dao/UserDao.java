@@ -58,6 +58,15 @@ public class UserDao {
             return null;
         }
     }
+
+    public boolean findUser(String username, String email) {
+        EntityManager em = ThreadLocalContext.get().getEntityManager();
+        Query q = em.createQuery("select u from User u where u.username = :username or u.email = :email");
+        q.setParameter("username", username);
+        q.setParameter("email", email);
+
+        return !q.getResultList().isEmpty();
+    }
     
     /**
      * Creates a new user.

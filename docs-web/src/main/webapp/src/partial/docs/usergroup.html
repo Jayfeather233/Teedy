@@ -3,7 +3,8 @@
     <div class="well well-3d">
       <p class="input-group">
         <span class="input-group-addon"><span class="fas fa-search"></span></span>
-        <input type="search" class="form-control" ng-attr-placeholder="{{ 'usergroup.search_groups' | translate }}" ng-model="searchGroup">
+        <input type="search" class="form-control" ng-attr-placeholder="{{ 'usergroup.search_groups' | translate }}"
+               ng-model="searchGroup">
       </p>
 
       <table class="row table table-hover">
@@ -25,7 +26,8 @@
     <div class="well well-3d">
       <p class="input-group">
         <span class="input-group-addon"><span class="fas fa-search"></span></span>
-        <input type="search" class="form-control" ng-attr-placeholder="{{ 'usergroup.search_users' | translate }}" ng-model="searchUser">
+        <input type="search" class="form-control" ng-attr-placeholder="{{ 'usergroup.search_users' | translate }}"
+               ng-model="searchUser">
       </p>
 
       <table class="row table table-hover">
@@ -44,6 +46,45 @@
       <div class="well-3d-background">
         <span class="fas fa-user"></span>
       </div>
+    </div>
+
+    <div class="well well-3d" ng-if="userInfo.base_functions.indexOf('ADMIN') == -1">
+      <form name="registerForm">
+        <label><span class="fas fa-users"></span>{{ 'register.register_title' | translate }}</label>
+        <div class="form-group" ng-class="{ 'has-error': registerForm.newUsername.$invalid}">
+          <label for="newUsername">{{ 'register.new_username' | translate }}</label>
+          <input type="text" class="form-control" id="newUsername" name="newUsername" ng-model="newUser.username"
+                 ng-pattern="/^[a-zA-Z0-9_@.-]*$/"
+                 ng-minlength="3" ng-maxlength="50"
+                 placeholder="{{ 'register.new_username_prompt' | translate }}">
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': registerForm.newPassword.$invalid}">
+          <label for="newPassword">{{ 'register.new_password' | translate }}</label>
+          <input type="password" class="form-control" id="newPassword" name="newPassword" ng-model="newUser.password"
+                 placeholder="{{ 'register.new_password_prompt' | translate }}">
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': registerForm.newEmail.$invalid}">
+          <label for="newEmail">{{ 'register.new_email' | translate }}</label>
+          <input class="form-control" id="newEmail" name="newEmail" ng-model="newUser.newEmail"
+                 placeholder="{{ 'register.new_email_prompt' | translate }}">
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': registerForm.newDesc.$invalid}">
+          <label for="newDesc">{{ 'register.new_desc' | translate }}</label>
+          <input class="form-control" id="newDesc" name="newDesc" ng-model="newUser.newDesc"
+                 placeholder="{{ 'register.new_desc_prompt' | translate }}">
+        </div>
+        <button class="btn btn-primary" ng-click="requestRegister(newUser)">{{ 'register.req_register' | translate }}
+        </button>
+      </form>
+    </div>
+
+
+    <div class="panel panel-default" ng-if="userInfo.base_functions.indexOf('ADMIN') != -1">
+      <div class="panel-heading"><strong>{{ 'register.admin.menu_title' | translate }}</strong></div>
+      <ul class="list-group">
+<!--        <a class="list-group-item" href="#/register/approve">{{ 'register.admin.regreq' | translate }}</a>-->
+        <a class="list-group-item" href="#/register/list">{{ 'register.admin.all_regreq' | translate }}</a>
+      </ul>
     </div>
   </div>
 

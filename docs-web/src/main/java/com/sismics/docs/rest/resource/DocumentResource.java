@@ -55,7 +55,6 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
-import jakarta.ws.rs.HEAD;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -78,7 +77,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -87,7 +85,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * Document REST resources.
@@ -512,8 +509,10 @@ public class DocumentResource extends BaseResource {
                 // Find files matching the document
                 filesOfDocument = CollectionUtils.select(filesList, file -> file.getDocumentId().equals(documentDto.getId()));
                 filesCount = (long) filesOfDocument.size();
-            } else {
+            } else if (filesCountByDocument != null) {
                 filesCount = filesCountByDocument.getOrDefault(documentDto.getId(), 0L);
+            } else {
+                filesCount = 0L;
             }
 
             JsonObjectBuilder documentObjectBuilder = createDocumentObjectBuilder(documentDto)
@@ -523,7 +522,7 @@ public class DocumentResource extends BaseResource {
                     .add("file_count", filesCount)
                     .add("tags", createTagsArrayBuilder(tagDtoList));
 
-            if (Boolean.TRUE == files) {
+            if (Boolean.TRUE == files && filesOfDocument != null) {
                 JsonArrayBuilder filesArrayBuilder = Json.createArrayBuilder();
                 for (File fileDb : filesOfDocument) {
                     filesArrayBuilder.add(RestUtil.fileToJsonObjectBuilder(fileDb));
