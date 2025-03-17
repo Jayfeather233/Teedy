@@ -4,6 +4,7 @@
  * User/group controller.
  */
 angular.module('docs').controller('UserGroup', function(Restangular, $scope, $state, $translate) {
+
   // Load users
   Restangular.one('user/list').get({
     sort_column: 1,
@@ -36,10 +37,20 @@ angular.module('docs').controller('UserGroup', function(Restangular, $scope, $st
     newEmail: '',
     newDesc: ''
   };
+  $scope.tmessage = {
+    id: '',
+    status: '',
+    isShow: false,
+    message: ''
+  }
 
   $scope.requestRegister = function (user) {
     if (!user.username || !user.password) {
-      alert("请填写所有字段！");
+      $scope.tmessage.status = 'failed';
+      $scope.tmessage.message = $translate.instant('usergroup.register.fillAllBlank');
+      $scope.tmessage.isShow = true;
+      $scope.id = 'failed';
+      setTimeout(() => { if($scope.tmessage.id === 'failed'){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
       return;
     }
     Restangular.one('/register/create').post("", {
@@ -48,9 +59,17 @@ angular.module('docs').controller('UserGroup', function(Restangular, $scope, $st
       email: user.newEmail,
       descript: user.newDesc
     }).then(function(response) {
-      alert($translate.instant('usergroup.register.success'))
+      $scope.tmessage.status = 'success';
+      $scope.tmessage.message = $translate.instant('usergroup.register.success');
+      $scope.tmessage.isShow = true;
+      $scope.id = 'success';
+      setTimeout(() => { if($scope.tmessage.id === 'success'){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
     }).catch(function(error) {
-      alert("注册失败: " + (error.data?.message || "未知错误"));
+      $scope.tmessage.status = 'failed';
+      $scope.tmessage.message = $translate.instant('usergroup.register.failed') + error.data?.message;
+      $scope.tmessage.isShow = true;
+      $scope.id = 'failed';
+      setTimeout(() => { if($scope.tmessage.id === 'failed'){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
     });
   }
 });

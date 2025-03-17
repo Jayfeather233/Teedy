@@ -1,9 +1,17 @@
 'use strict';
 
-angular.module('docs').controller('RegisterList', function(Restangular, $scope) {
+angular.module('docs').controller('RegisterList', function(Restangular, $scope, $translate) {
 
+  $scope.tmessage = {
+    id: '',
+    status: '',
+    isShow: false,
+    message: ''
+  }
   $scope.filterStatus = "all";
   $scope.filtered_list = [];
+  $scope.sortColumn = 'create_date';
+  $scope.reverseSort = true;
   $scope.loadData = function() {
     Restangular.all('/register/all').getList().then(function(response) {
       $scope.all_list = response;
@@ -41,30 +49,46 @@ angular.module('docs').controller('RegisterList', function(Restangular, $scope) 
     }
   };
   // approve 函数，调用 accept API
-  $scope.approve = function(id) {
-    Restangular.all('/register/accept').post("", { id: id })
+  $scope.approve = function(item) {
+    Restangular.all('/register/accept').post("", { id: item.id })
         .then(function(response) {
-          // 成功处理
-          alert("审批通过！");
+          $scope.tmessage.status = 'success';
+          $scope.tmessage.message = $translate.instant('register.status.success');
+          $scope.tmessage.isShow = true;
+          $scope.tmessage.id = item.id;
+
+          setTimeout(() => { if($scope.tmessage.id === item.id){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
           $scope.loadData();
         })
         .catch(function(error) {
-          console.error("审批失败:", error);
-          alert("审批操作失败，请稍后再试");
+          $scope.tmessage.status = 'failed';
+          $scope.tmessage.message = $translate.instant('register.status.failed') + error;
+          $scope.tmessage.isShow = true;
+          $scope.tmessage.id = item.id;
+
+          setTimeout(() => { if($scope.tmessage.id === item.id){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
         });
   };
 
   // deny 函数，调用 deny API
-  $scope.deny = function(id) {
-    Restangular.all('/register/deny').post("", { id: id })
+  $scope.deny = function(item) {
+    Restangular.all('/register/deny').post("", { id: item.id })
         .then(function(response) {
-          // 成功处理
-          alert("已拒绝！");
+          $scope.tmessage.status = 'success';
+          $scope.tmessage.message = $translate.instant('register.status.success');
+          $scope.tmessage.isShow = true;
+          $scope.tmessage.id = item.id;
+
+          setTimeout(() => { if($scope.tmessage.id === item.id){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
           $scope.loadData();
         })
         .catch(function(error) {
-          console.error("拒绝操作失败:", error);
-          alert("拒绝操作失败，请稍后再试");
+          $scope.tmessage.status = 'failed';
+          $scope.tmessage.message = $translate.instant('register.status.failed') + error;
+          $scope.tmessage.isShow = true;
+          $scope.tmessage.id = item.id;
+
+          setTimeout(() => { if($scope.tmessage.id === item.id){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
         });
   };
 

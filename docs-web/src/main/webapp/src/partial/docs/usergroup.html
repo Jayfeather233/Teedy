@@ -49,6 +49,20 @@
     </div>
 
     <div class="well well-3d" ng-if="userInfo.base_functions.indexOf('ADMIN') == -1">
+
+      <div class="toast-container">
+        <div class="custom-toast" ng-class="{'show': tmessage.isShow, 'success': tmessage.status === 'success', 'failed': tmessage.status === 'failed'}" role="alert">
+          <div class="toast-header">
+            <strong class="me-auto">
+              <span ng-if="tmessage.status === 'success'" class="text-success">✅ {{ tmessage.message }}</span>
+              <span ng-if="tmessage.status === 'failed'" class="text-danger">❌ {{ tmessage.message }}</span>
+            </strong>
+            <button type="button" class="btn-close" ng-click="tmessage.isShow = false"></button>
+          </div>
+        </div>
+      </div>
+      <h2 class="text-center mb-4">{{ 'register.list.title' | translate }}</h2>
+
       <form name="registerForm">
         <label><span class="fas fa-users"></span>{{ 'register.register_title' | translate }}</label>
         <div class="form-group" ng-class="{ 'has-error': registerForm.newUsername.$invalid}">

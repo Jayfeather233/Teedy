@@ -1,4 +1,15 @@
-<div class="container mt-5">
+<div class="container mt-5 well well-3d">
+  <div class="toast-container">
+    <div class="custom-toast" ng-class="{'show': tmessage.isShow, 'success': tmessage.status === 'success', 'failed': tmessage.status === 'failed'}" role="alert">
+      <div class="toast-header">
+        <strong class="me-auto">
+          <span ng-if="tmessage.status === 'success'" class="text-success">✅ {{ tmessage.message }}</span>
+          <span ng-if="tmessage.status === 'failed'" class="text-danger">❌ {{ tmessage.message }}</span>
+        </strong>
+        <button type="button" class="btn-close" ng-click="tmessage.isShow = false"></button>
+      </div>
+    </div>
+  </div>
   <h2 class="text-center mb-4">{{ 'register.list.title' | translate }}</h2>
 
   <!-- 筛选按钮 -->
@@ -11,7 +22,7 @@
 
   <div class="table-container table-responsive">
     <table class="table table-striped table-hover table-bordered">
-      <thead class="thead-dark">
+      <thead>
       <tr>
         <th>
           <span>{{ 'register.list.username' | translate }}</span>
@@ -51,8 +62,8 @@
         <td>{{ item.create_date | date:'yyyy-MM-dd HH:mm' }}</td>
         <td>
           <!-- 只有当状态是 'waiting' 时才显示操作按钮 -->
-          <button ng-click="approve(item.id)" class="btn btn-success btn-sm" ng-if="item.delete_date === 'null' && item.disable_date === 'null'">{{ 'register.list.approve' | translate }}</button>
-          <button ng-click="deny(item.id)" class="btn btn-danger btn-sm" ng-if="item.delete_date === 'null' && item.disable_date === 'null'">{{ 'register.list.deny' | translate }}</button>
+          <button ng-click="approve(item)" class="btn btn-success btn-sm" ng-if="item.delete_date === 'null' && item.disable_date === 'null'">{{ 'register.list.approve' | translate }}</button>
+          <button ng-click="deny(item)" class="btn btn-danger btn-sm" ng-if="item.delete_date === 'null' && item.disable_date === 'null'">{{ 'register.list.deny' | translate }}</button>
         </td>
       </tr>
       </tbody>
