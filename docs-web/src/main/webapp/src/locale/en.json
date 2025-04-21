@@ -256,13 +256,55 @@
       "edit_user": "Edit {{ username }} user"
     }
   },
+  "register": {
+    "req_register": "Request for Register",
+    "register_title": "Register new user",
+    "new_username": "Username",
+    "new_username_prompt": "Enter username",
+    "new_password": "Password",
+    "new_password_prompt": "Enter password",
+    "new_email": "E-mail",
+    "new_email_prompt": "Enter E-mail (optional)",
+    "new_desc": "Application Description",
+    "new_desc_prompt": "Enter application description (optional)",
+    "admin": {
+      "menu_title": "New User Management",
+      "regreq": "New User Requests",
+      "all_regreq": "New User Requests"
+    },
+    "list": {
+      "title": "New User List",
+      "username": "Username",
+      "email": "Email",
+      "descript": "Description",
+      "status": "Status",
+      "create_date": "Creation Date",
+      "actions": "Actions",
+      "passed": "Approved",
+      "rejected": "Rejected",
+      "approve": "Approve",
+      "deny": "Deny",
+      "waiting": "Waiting",
+      "all": "All",
+      "notification": ""
+    },
+    "status": {
+      "success": "Success",
+      "failed": "Failed"
+    }
+  },
   "usergroup": {
     "search_groups": "Search in groups",
     "search_users": "Search in users",
     "you": "It's you!",
     "default": {
       "title": "Users & Groups",
-      "message": "Here you can view informations about users and groups."
+      "message": "Here you can view information about users and groups."
+    },
+    "register": {
+      "fillAllBlank": "Please fill in all required fields",
+      "failed": "Request sending failed",
+      "success": "Request sent successfully"
     }
   },
   "settings": {

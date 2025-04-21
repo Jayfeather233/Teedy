@@ -34,6 +34,12 @@ public class TestDocumentResource extends BaseJerseyTest {
      */
     @Test
     public void testDocumentResource() throws Exception {
+
+        JsonObject json = target().path("/document/list")
+                        .request()
+                        .get(JsonObject.class);
+        Assert.assertNotNull(json);
+        Assert.assertEquals("ForbiddenError", json.getString("type"));
         // Login document1
         clientUtil.createUser("document1");
         String document1Token = clientUtil.login("document1");
@@ -43,7 +49,7 @@ public class TestDocumentResource extends BaseJerseyTest {
         String document3Token = clientUtil.login("document3");
         
         // Create a tag
-        JsonObject json = target().path("/tag").request()
+        json = target().path("/tag").request()
                 .cookie(TokenBasedSecurityFilter.COOKIE_NAME, document1Token)
                 .put(Entity.form(new Form()
                         .param("name", "SuperTag")

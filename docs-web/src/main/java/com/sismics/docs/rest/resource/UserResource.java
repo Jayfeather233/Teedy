@@ -602,7 +602,8 @@ public class UserResource extends BaseResource {
                     .setUserId(user.getId())
                     .setRecursive(true), null);
             
-            response.add("username", user.getUsername())
+            response.add("id",  user.getId())
+                    .add("username", user.getUsername())
                     .add("email", user.getEmail())
                     .add("storage_quota", user.getStorageQuota())
                     .add("storage_current", user.getStorageCurrent())
@@ -676,6 +677,7 @@ public class UserResource extends BaseResource {
         }
         
         JsonObjectBuilder response = Json.createObjectBuilder()
+                .add("id",  user.getId())
                 .add("username", user.getUsername())
                 .add("groups", groups)
                 .add("email", user.getEmail())
@@ -722,7 +724,7 @@ public class UserResource extends BaseResource {
         if (!authenticate()) {
             throw new ForbiddenClientException();
         }
-        
+
         JsonArrayBuilder users = Json.createArrayBuilder();
         SortCriteria sortCriteria = new SortCriteria(sortColumn, asc);
 
@@ -735,7 +737,7 @@ public class UserResource extends BaseResource {
                 groupId = group.getId();
             }
         }
-        
+
         UserDao userDao = new UserDao();
         List<UserDto> userDtoList = userDao.findByCriteria(new UserCriteria().setGroupId(groupId), sortCriteria);
         for (UserDto userDto : userDtoList) {
@@ -749,7 +751,7 @@ public class UserResource extends BaseResource {
                     .add("create_date", userDto.getCreateTimestamp())
                     .add("disabled", userDto.getDisableTimestamp() != null));
         }
-        
+
         JsonObjectBuilder response = Json.createObjectBuilder()
                 .add("users", users);
         return Response.ok().entity(response.build()).build();

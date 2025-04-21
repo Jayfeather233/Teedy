@@ -1,0 +1,22 @@
+<div class="row">
+  <!-- User List -->
+  <div class="col-md-4">
+    <div class="well well-3d">
+      <h4>{{ 'chat.users_in_group' | translate }}</h4>
+      <ul class="list-group">
+        <li class="list-group-item"
+            ng-repeat="user in groupUsers"
+            ng-if="user.id !== currentUser.id"
+            ng-class="{ active: selectedUser.id === user.id }"
+            ng-click="selectUser(user)">
+          <span class="fas fa-user"></span> {{ user.name }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Chatbox -->
+  <div class="col-md-8">
+    <div ui-view="sub"></div>
+  </div>
+</div>

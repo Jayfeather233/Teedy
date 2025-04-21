@@ -428,15 +428,6 @@ angular.module('docs',
         }
       }
     })
-    .state('register.RegisterApprove', {
-      url: '/approve',
-      views: {
-        'sub': {
-          templateUrl: 'partial/docs/register.approve.html',
-          controller: 'RegisterApprove'
-        }
-      }
-    })
     .state('register.RegisterList', {
       url: '/list',
       views: {
@@ -445,7 +436,26 @@ angular.module('docs',
           controller: 'RegisterList'
         }
       }
-    });
+    })
+    .state('chat', {
+      url: '/chat',
+      views: {
+        'page': {
+          templateUrl: 'partial/docs/chat.html',
+          controller: 'Chat'
+        }
+      }
+    })
+    .state('chat.chatbox', {
+      url: '/:id',
+      views: {
+        'sub': {
+          templateUrl: 'partial/docs/chat.chatbox.html',
+          controller: 'Chatbox'
+        }
+      }
+    })
+  ;
 
   // Configuring Restangular
   RestangularProvider.setBaseUrl('../api');
