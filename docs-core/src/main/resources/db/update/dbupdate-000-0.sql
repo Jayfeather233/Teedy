@@ -27,6 +27,14 @@ cached table T_REGISTER_REQUEST (
     primary key (RER_ID_C)
 );
 
+create memory table T_CHAT (
+    CHA_ID_N varchar(36) primary key,
+    CHA_FROM_C varchar(36) not null REFERENCES T_USER(USE_ID_C) ON DELETE CASCADE,
+    CHA_TO_C varchar(36) not null REFERENCES T_USER(USE_ID_C) ON DELETE CASCADE,
+    CHA_MSG_C TEXT,
+    CHA_TIME_D datetime DEFAULT CURRENT_TIMESTAMP
+);
+
 alter table T_AUTHENTICATION_TOKEN add constraint FK_AUT_IDUSER_C foreign key (AUT_IDUSER_C) references T_USER (USE_ID_C) on delete restrict on update restrict;
 alter table T_DOCUMENT add constraint FK_DOC_IDUSER_C foreign key (DOC_IDUSER_C) references T_USER (USE_ID_C) on delete restrict on update restrict;
 alter table T_FILE add constraint FK_FIL_IDDOC_C foreign key (FIL_IDDOC_C) references T_DOCUMENT (DOC_ID_C) on delete restrict on update restrict;
