@@ -1,13 +1,24 @@
-<div class="container mt-5 well well-3d">
+<!--<div class="container mt-5 well well-3d">-->
+<div class="well col-lg-12">
 <div class="panel panel-default chatbox">
   <div class="panel-heading">
     <h3 class="panel-title"><span class="fas fa-comments"></span> {{ selectedUser.name }}</h3>
   </div>
-  <div class="panel-body chat-messages" style="height: 300px; overflow-y: scroll;">
-    <div ng-repeat="msg in getMessages(selectedUser.id)" ng-class="{ 'text-right' : msg.fromUserId === currentUser.id }">
-      <p><strong>{{ msg.fromUserId === currentUser.id ? 'You' : getUserNameById(msg.fromUserId) }}</strong>: {{ msg.msg }}</p>
+  <div class="panel-body chat-messages" style="height: calc(100vh - 340px); overflow-y: scroll; background-color: #f5f5f5;">
+    <div ng-repeat="msg in getMessages(selectedUser.id)"
+         class="message-row"
+         ng-class="{ 'message-sent' : msg.fromUserId === currentUser.id, 'message-received' : msg.fromUserId !== currentUser.id }">
+
+      <div class="message-meta">
+        <strong>{{ msg.fromUserId === currentUser.id ? 'You' : getUserNameById(msg.fromUserId) }}</strong>
+      </div>
+      <br />
+      <div class="message-bubble">
+        <div class="message-text">{{ msg.msg }}</div>
+      </div>
     </div>
   </div>
+
   <div class="panel-footer">
     <form ng-submit="sendMessage()">
       <div class="input-group">
