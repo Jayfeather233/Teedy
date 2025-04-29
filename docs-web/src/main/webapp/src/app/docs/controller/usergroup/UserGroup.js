@@ -66,7 +66,7 @@ angular.module('docs').controller('UserGroup', function(Restangular, $scope, $st
       setTimeout(() => { if($scope.tmessage.id === 'success'){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
     }).catch(function(error) {
       $scope.tmessage.status = 'failed';
-      $scope.tmessage.message = $translate.instant('usergroup.register.failed') + error.data?.message;
+      $scope.tmessage.message = $translate.instant('usergroup.register.failed') + (error.data && error.data.message);
       $scope.tmessage.isShow = true;
       $scope.id = 'failed';
       setTimeout(() => { if($scope.tmessage.id === 'failed'){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);

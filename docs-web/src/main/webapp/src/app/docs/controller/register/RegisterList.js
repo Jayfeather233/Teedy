@@ -57,7 +57,7 @@ angular.module('docs').controller('RegisterList', function(Restangular, $scope, 
           $scope.tmessage.isShow = true;
           $scope.tmessage.id = item.id;
 
-          setTimeout(() => { if($scope.tmessage.id === item.id){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
+          setTimeout(function () { if($scope.tmessage.id === item.id){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
           $scope.loadData();
         })
         .catch(function(error) {
@@ -66,7 +66,7 @@ angular.module('docs').controller('RegisterList', function(Restangular, $scope, 
           $scope.tmessage.isShow = true;
           $scope.tmessage.id = item.id;
 
-          setTimeout(() => { if($scope.tmessage.id === item.id){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
+          setTimeout(function () { if($scope.tmessage.id === item.id){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
         });
   };
 
@@ -79,7 +79,7 @@ angular.module('docs').controller('RegisterList', function(Restangular, $scope, 
           $scope.tmessage.isShow = true;
           $scope.tmessage.id = item.id;
 
-          setTimeout(() => { if($scope.tmessage.id === item.id){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
+          setTimeout(function () { if($scope.tmessage.id === item.id){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
           $scope.loadData();
         })
         .catch(function(error) {
@@ -88,7 +88,7 @@ angular.module('docs').controller('RegisterList', function(Restangular, $scope, 
           $scope.tmessage.isShow = true;
           $scope.tmessage.id = item.id;
 
-          setTimeout(() => { if($scope.tmessage.id === item.id){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
+          setTimeout(function () { if($scope.tmessage.id === item.id){ $scope.tmessage.isShow = false; $scope.$apply();} }, 2000);
         });
   };
 

@@ -3,8 +3,8 @@
 /**
  * Chatbox controller.
  */
-angular.module('docs').controller('Chatbox', function($stateParams, Restangular, $scope) {
-  alert("chatbox loaded, id=" + $stateParams.id);
+angular.module('docs').controller('Chatbox', function($stateParams, Restangular, $interval, $scope) {
+  // alert("chatbox loaded, id=" + $stateParams.id);
   // $stateParams.id
   $scope.newMessage = "";
   $scope.sendMessage = function () {
@@ -28,9 +28,21 @@ angular.module('docs').controller('Chatbox', function($stateParams, Restangular,
   };
 
   $scope.getMessages = function (id) {
-    let msgs = $scope.messages[id] || [];
+    const msgs = $scope.messages[id] || [];
     return msgs.slice().sort(function(a, b) {
       return a.create_time-b.create_time;
     });
   };
+
+  const pollInterval = 2000;
+  const poller = $interval(function () {
+    $scope.getMessagesWith($stateParams.id);
+  }, pollInterval);
+
+  // Clean up when leaving the page
+  $scope.$on('$destroy', function () {
+    if (poller) {
+      $interval.cancel(poller);
+    }
+  });
 });

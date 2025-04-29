@@ -3,10 +3,9 @@
 /**
  * Chat controller.
  */
-angular.module('docs').controller('Chat', function($scope, Restangular, $state) {
+angular.module('docs').controller('Chat', function($scope, Restangular, $timeout, $state) {
   Restangular.one('/user').get().then(function(currentUser) {
     $scope.currentUser = currentUser;
-    alert(currentUser.id + currentUser.username)
     $scope.groupUsers = [];
 
     const userIdSet = new Set(); // To prevent duplicates
@@ -46,7 +45,7 @@ angular.module('docs').controller('Chat', function($scope, Restangular, $state) 
 // Get messages with selected user
   $scope.getMessagesWith = function (userId) {
     Restangular.one('chat', userId).get().then(function (chatMsgs) {
-      alert(chatMsgs);
+      // alert(chatMsgs);
       $scope.messages[userId] = chatMsgs;
     }, function (error) {
       console.error("Failed to fetch messages:", error);
