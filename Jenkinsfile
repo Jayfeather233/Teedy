@@ -26,6 +26,7 @@ pipeline {
                 echo "deploying..."
                 kubectl apply -f hello-node.yaml
                 kubectl apply -f k8s_deploy.yaml
+                sleep 30
                 kubectl port-forward service/hello-node 8081:8080
                 '''
             }
