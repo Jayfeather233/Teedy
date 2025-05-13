@@ -1,70 +1,38 @@
 pipeline {
     agent any
-
     environment {
-        // define environment variable
-        // Jenkins credentials configuration
-        DOCKER_HUB_CREDENTIALS = credentials('dockerhub_credentials') // Docker Hub credentials ID store in Jenkins
-        // Docker Hub Repository's name
-        DOCKER_IMAGE = 'jayfeather233/teedy'
-        DOCKER_TAG = "${env.BUILD_NUMBER}" // use build number as tag
+        DEPLOYMENT_NAME = "teedy"
+        CONTAINER_NAME = "teedy_node"
+        IMAGE_NAME = "teedy2025_manual"
     }
-
     stages {
-        stage('Build') {
+        stage('Start Kind') {
             steps {
-                checkout scmGit(
-                    branches: [[name: '*/master']],
-                    extensions: [],
-                    userRemoteConfigs: [[url: 'https://github.com/Jayfeather233/Teedy']]
-                    // your github Repository
-                )
-                sh 'mvn -B -DskipTests clean package'
+                sh '''
+                if ! kind get clusters | grep -q "${DEPLOYMENT_NAME}"; then
+                    echo "Starting kind clusters..."
+                    kind create cluster --name ${DEPLOYMENT_NAME}
+                else
+                    echo "Kind cluster already running."
+                fi
+                kind load docker-image ${IMAGE_NAME} --name ${DEPLOYMENT_NAME}
+                kubectl config use-context kind-${DEPLOYMENT_NAME}
+                '''
             }
         }
-
-        // Building Docker images
-        stage('Building image') {
+        stage('deploying') {
             steps {
-                script {
-                    // assume Dockerfile locate at root
-                    docker.build("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}")
-                }
+                sh '''
+                echo "deploying..."
+                kubectl apply -f hello-node.yaml
+                kubectl apply -f k8s_deploy.yaml
+                kubectl port-forward service/hello-node 8080:8080
+                '''
             }
         }
-
-        // Uploading Docker images into Docker Hub
-        stage('Upload image') {
+        stage('Verify') {
             steps {
-                script {
-                    // sign in Docker Hub
-                    docker.withRegistry('https://registry.hub.docker.com',
-                        'dockerhub_credentials') {
-                        // push image
-                        docker.image("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}").push()
-
-                        // ：optional: label latest
-                        docker.image("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}").push('latest')
-                    }
-                }
-            }
-        }
-
-        // Running Docker container
-        stage('Run containers') {
-            steps {
-                script {
-                    // stop then remove containers if exists
-                    sh 'docker stop teedy-container-8081 || true'
-                    sh 'docker rm teedy-container-8081 || true'
-                    // run Container
-                    docker.image("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}").run(
-                        '--name teedy-container-8081 -d -p 8081:8080'
-                    )
-                    // Optional: list all teedy-containers
-                    sh 'docker ps --filter "name=teedy-container"'
-
-                }
+                sh 'kubectl get pods'
             }
         }
     }

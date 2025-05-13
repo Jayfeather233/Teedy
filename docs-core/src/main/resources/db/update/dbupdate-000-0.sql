@@ -14,8 +14,7 @@ create cached table T_ACL ( ACL_ID_C varchar(36) not null, ACL_PERM_C varchar(30
 create cached table T_SHARE ( SHA_ID_C varchar(36) not null, SHA_NAME_C varchar(36), SHA_CREATEDATE_D datetime, SHA_DELETEDATE_D datetime, primary key (SHA_ID_C) );
 create cached table T_AUDIT_LOG ( LOG_ID_C varchar(36) not null, LOG_IDENTITY_C varchar(36) not null, LOG_CLASSENTITY_C varchar(50) not null, LOG_TYPE_C varchar(50) not null, LOG_MESSAGE_C varchar(1000), LOG_CREATEDATE_D datetime, primary key (LOG_ID_C) );
 
-create
-cached table T_REGISTER_REQUEST (
+create cached table T_REGISTER_REQUEST (
     RER_ID_C varchar(36) not null,
     RER_USERNAME_C varchar(50) not null,
     RER_PASSWORD_C varchar(60) not null,

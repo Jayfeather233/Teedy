@@ -18,6 +18,7 @@ RUN apt-get update && \
     vim less procps unzip wget tzdata openjdk-11-jdk \
     ffmpeg \
     mediainfo \
+    postgresql postgresql-client\
     tesseract-ocr \
     tesseract-ocr-ara \
     tesseract-ocr-ces \
